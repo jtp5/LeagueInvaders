@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,8 +15,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	int CURRENT_STATE = MENU_STATE;
+	Font titleFont;
+	Font font2;
+	Rocketship rocket;
 	GamePanel() {
 		timer = new Timer(1000/60, this);
+		titleFont = new Font("Arial", Font.PLAIN, 48);
+		font2 = new Font("Arial", Font.PLAIN, 32);
+		rocket = new Rocketship(250, 700, 50, 50);
 	}
 	void startGame(){
 		timer.start();
@@ -26,7 +33,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState(){
-		
+		rocket.update();
 	}
 	
 	void updateEndState(){
@@ -34,18 +41,28 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	void drawMenuState(Graphics g){
+		g.setFont(titleFont);
 		g.setColor(new Color(78, 178, 143));
 		g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
+		g.setColor(Color.BLACK);
+		g.drawString("League Invaders", 75, 350);
+		g.setFont(font2);
+		g.drawString("Press Enter To Begin", 75, 400);
+		g.drawString("Press Space For Instructions", 75, 450);
 	}
 	
 	void drawGameState(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
+		rocket.draw(g);
 	}
 	
 	void drawEndState(Graphics g){
+		g.setFont(titleFont);
 		g.setColor(Color.RED);
 		g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
+		g.setColor(Color.BLACK);
+		g.drawString("Game Over", 125, 350);
 	}
 	
 	@Override
@@ -79,7 +96,13 @@ public void keyTyped(KeyEvent e) {
 @Override
 public void keyPressed(KeyEvent e) {
 	// TODO Auto-generated method stub
-	
+	if(e.getKeyCode() == KeyEvent.VK_ENTER){
+		CURRENT_STATE++;
+	}
+	if(CURRENT_STATE > END_STATE){
+		CURRENT_STATE = MENU_STATE;
+	}
+
 }
 @Override
 public void keyReleased(KeyEvent e) {

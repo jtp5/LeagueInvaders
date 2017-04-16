@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class GameObject {
@@ -10,11 +11,10 @@ GameObject(){
 	y = 10;
 }
 void update(){
-	x++;
-	y++;
+
 }
 void draw(Graphics g){
-	g.fillRect(x, y, 100, 100);	
+
 }
 }
 
