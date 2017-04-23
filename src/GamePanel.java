@@ -18,11 +18,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font titleFont;
 	Font font2;
 	Rocketship rocket;
+	ObjectManager manager;
+	boolean canFire;
 	GamePanel() {
 		timer = new Timer(1000/60, this);
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		font2 = new Font("Arial", Font.PLAIN, 32);
 		rocket = new Rocketship(250, 700, 50, 50);
+		manager = new ObjectManager();
+		manager.addObject(rocket);
+		canFire = true;
 	}
 	void startGame(){
 		timer.start();
@@ -33,7 +38,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState(){
-		rocket.update();
+		manager.update();
 	}
 	
 	void updateEndState(){
@@ -54,7 +59,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.width, LeagueInvaders.height);
-		rocket.draw(g);
+		manager.draw(g);
 	}
 	
 	void drawEndState(Graphics g){
@@ -102,12 +107,42 @@ public void keyPressed(KeyEvent e) {
 	if(CURRENT_STATE > END_STATE){
 		CURRENT_STATE = MENU_STATE;
 	}
-
-}
+	if(e.getKeyCode() == KeyEvent.VK_UP){
+		rocket.up = true;
+	}
+	if(e.getKeyCode() == KeyEvent.VK_DOWN){
+		rocket.down = true;
+	}
+	if(e.getKeyCode() == KeyEvent.VK_LEFT){
+		rocket.left = true;
+	}
+	if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+		rocket.right = true;
+	}
+	if(e.getKeyCode() == KeyEvent.VK_SPACE && canFire){
+		manager.addObject(new Projectile(rocket.x + 20, rocket.y, 10, 10));
+		canFire = false;
+	}
+	}
 @Override
 public void keyReleased(KeyEvent e) {
 	// TODO Auto-generated method stub
 	System.out.println("i luv eli most");
+	if(e.getKeyCode() == KeyEvent.VK_UP){
+		rocket.up = false;
+	}
+	if(e.getKeyCode() == KeyEvent.VK_DOWN){
+		rocket.down = false;
+	}
+	if(e.getKeyCode() == KeyEvent.VK_LEFT){
+		rocket.left = false;
+	}
+	if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+		rocket.right = false;
+	}
+	if(e.getKeyCode() == KeyEvent.VK_SPACE){
+		canFire = true;
+	}
 }
 
 }

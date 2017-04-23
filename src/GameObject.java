@@ -6,9 +6,11 @@ int x;
 int y;
 int width;
 int height;
+public boolean isAlive;
 GameObject(){
 	x = 10;
 	y = 10;
+	isAlive = true;
 }
 void update(){
 
