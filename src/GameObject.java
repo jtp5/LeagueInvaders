@@ -1,22 +1,27 @@
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class GameObject {
-int x;
-int y;
-int width;
-int height;
-public boolean isAlive;
-GameObject(){
-	x = 10;
-	y = 10;
-	isAlive = true;
-}
-void update(){
+	Rectangle collisionBox;
+	int x;
+	int y;
+	int width;
+	int height;
+	public boolean isAlive;
 
-}
-void draw(Graphics g){
+	GameObject() {
+		x = 10;
+		y = 10;
+		isAlive = true;
+		collisionBox = new Rectangle(x, y, width, height);
+	}
 
-}
-}
+	void update() {
+		collisionBox.setBounds(x, y, width, height);
+	}
 
+	void draw(Graphics g) {
+
+	}
+}
