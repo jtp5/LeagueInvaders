@@ -7,6 +7,7 @@ public class Rocketship extends GameObject {
 	boolean down;
 	boolean left;
 	boolean right;
+	public float stamina;
 Rocketship(int x, int y, int width, int height){
 	super();
 	this.x = x;
@@ -18,6 +19,7 @@ Rocketship(int x, int y, int width, int height){
 	down = false;
 	left = false;
 	right = false;
+	stamina = 100;
 }
 
 void update(){
@@ -34,6 +36,7 @@ void update(){
 	if(right){
 		x += speed;
 	}
+	stamina += .2;
 }
 
 void draw(Graphics g){

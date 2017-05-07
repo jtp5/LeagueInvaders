@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static BufferedImage rocketImg;
 	public static BufferedImage bulletImg;
 	public static BufferedImage spaceImg;
+	public static BufferedImage PowerupImg;
 	Font titleFont;
 	Font font2;
 	Rocketship rocket;
@@ -41,6 +42,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
 			bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
 			spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
+			PowerupImg = ImageIO.read(this.getClass().getResourceAsStream("Powerup.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,6 +87,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	
 	void drawGameState(Graphics g){
 		g.drawImage(spaceImg, 0, 0, LeagueInvaders.width, LeagueInvaders.height, null);
+		g.setColor(Color.RED);
+		g.drawRect(10, 20, (int)rocket.stamina, 20);
 		manager.draw(g);
 	}
 	
@@ -145,9 +149,10 @@ public void keyPressed(KeyEvent e) {
 	if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 		rocket.right = true;
 	}
-	if(e.getKeyCode() == KeyEvent.VK_SPACE && canFire){
+	if(e.getKeyCode() == KeyEvent.VK_SPACE && canFire && rocket.stamina >= 10){
 		manager.addObject(new Projectile(rocket.x + 20, rocket.y, 10, 10));
 		canFire = false;
+		rocket.stamina -= 10;
 	}
 	}
 @Override
